@@ -1,0 +1,28 @@
+image: go1.4
+
+services:
+  - mongodb
+
+# using default docker-link env
+#env:
+#  - MONGODB_PORT_27017_TCP_ADDR=mongodb
+#  - MONGODB_PORT_27017_TCP_PORT=27017
+
+script:
+  - export GOPATH=$PWD
+  - export PATH=$PATH:$GOPATH/bin
+  - sudo apt-get update
+  - sudo apt-get -y install bzr
+  - go get github.com/t-yuki/gocover-cobertura
+  - go get github.com/onsi/gomega
+  - go get github.com/onsi/ginkgo
+  - go get labix.org/v2/mgo
+  - go install github.com/DaoCloud/golang-mongo-sample
+  - go test github.com/DaoCloud/golang-mongo-sample
+
+notify:
+  email:
+    recipients:
+      - sample@daocloud.io
+    on_success: on
+    on_failure: off
