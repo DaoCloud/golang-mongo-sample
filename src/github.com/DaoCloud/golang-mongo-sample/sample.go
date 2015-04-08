@@ -17,7 +17,7 @@ type Person struct {
 }
 
 var (
-	IsDrop = true
+	IsDrop = false
 )
 
 func GetResult() string {
