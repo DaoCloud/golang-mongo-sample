@@ -20,9 +20,3 @@ script:
   - go install github.com/DaoCloud/golang-mongo-sample
   - go test github.com/DaoCloud/golang-mongo-sample
 
-notify:
-  email:
-    recipients:
-      - sample@daocloud.io
-    on_success: on
-    on_failure: off
