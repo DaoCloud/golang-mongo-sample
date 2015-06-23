@@ -73,7 +73,7 @@ func GetResult() string {
 	// Index
 	index := mgo.Index{
 		Key:        []string{"name", "phone"},
-		Unique:     true,
+		Unique:     false,
 		DropDups:   true,
 		Background: true,
 		Sparse:     true,
