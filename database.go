@@ -53,7 +53,7 @@ func ConnectMongo() error {
     }
 
     DB = session.DB(db)
-    PeopleC = session.DB(db).C("people")
+    PeopleC = DB.C("people")
 
     return nil
 }

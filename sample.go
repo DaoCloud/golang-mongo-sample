@@ -30,7 +30,6 @@ func Insert() {
 }
 
 func GetResult() string {
-
     result := &Person{}
 
     err := PeopleC.Find(bson.M{"name": "Ale"}).Select(bson.M{"phone": 0}).One(&result)
