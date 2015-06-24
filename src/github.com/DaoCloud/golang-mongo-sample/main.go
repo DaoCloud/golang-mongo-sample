@@ -28,6 +28,11 @@ func log() {
 }
 
 func hello(res http.ResponseWriter, req *http.Request) {
+    defer func(){
+        if e := recover(); e != nil{
+            fmt.Fprintln(res, e)
+        }
+    }()
 	fmt.Fprintln(res, "Hello World, ", GetResult())
 }
 
