@@ -10,7 +10,9 @@ import (
 var DB *mgo.Database
 
 func MustConnectMongo() {
-
+    if err := ConnectMongo(); err != nil {
+        panic(err)
+    }
 }
 
 func ConnectMongo() error {

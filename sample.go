@@ -10,8 +10,8 @@ import (
 
 type Person struct {
     ID        bson.ObjectId `bson:"_id,omitempty"`
-    Name      string
-    Phone     string
+    Name      string        `bson:"name"`
+    Phone     string        `bson:"phone"`
     Timestamp time.Time
 }
 
