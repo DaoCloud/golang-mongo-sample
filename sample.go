@@ -16,7 +16,7 @@ var peopleC *mgo.Collection
 func Insert(person *Person) {
 
     if person.Name == "" || GetResult(person.Name) != "" {
-        return
+        panic("insert conflict")
     }
     // Insert Datas
     err := peopleC.Insert(person)

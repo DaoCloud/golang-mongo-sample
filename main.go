@@ -46,19 +46,26 @@ func index(res http.ResponseWriter, req *http.Request) {
 }
 
 func insert(res http.ResponseWriter, req *http.Request) {
+    defer func() {
+        if e := recover(); e != nil {
+            log.Println(res, e)
+            res.WriteHeader(http.StatusInternalServerError)
+        }
+    }()
+
     person := &Person{}
     person.Name = req.FormValue("name")
     person.Phone = req.FormValue("phone")
 
-    log.Println("Insert new person %v", *person)
     Insert(person)
+
+    log.Println("Insert new person %v", *person)
     http.Redirect(res, req, "/", 302)
-    // log.Println(name, phone)
 }
 
 func drop(res http.ResponseWriter, req *http.Request) {
+    log.Println("drop collection")
 
-    log.Println("drop database")
     Drop()
 
     http.Redirect(res, req, "/", 302)
