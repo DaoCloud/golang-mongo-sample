@@ -12,6 +12,7 @@ var _ = Describe("Sample", func() {
                 MustConnectMongo()
                 Insert()
                 Expect(GetResult("Ale")).To(Equal("Ale"))
+                Drop()
             })
         })
     })
