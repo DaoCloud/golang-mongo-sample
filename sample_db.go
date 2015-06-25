@@ -59,8 +59,9 @@ func ConnectMongo() error {
     return nil
 }
 
-func Drop() { // Drop Database
-    err := DB.DropDatabase()
+func Drop() {
+    // Drop Collection
+    err := peopleC.DropCollection()
     if err != nil {
         log.Println(err)
     }
