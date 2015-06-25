@@ -10,7 +10,6 @@ var _ = Describe("Sample", func() {
         Context("inspecting their name", func() {
             It("should result 'Ale'", func() {
                 MustConnectMongo()
-                Insert()
                 Expect(GetResult("Ale")).To(Equal("Ale"))
                 Drop()
             })
