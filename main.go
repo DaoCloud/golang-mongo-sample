@@ -17,7 +17,7 @@ func main() {
     http.HandleFunc("/env", env)
 
     log.Println("Start listening...")
-    err := http.ListenAndServe(":8080", nil)
+    err := http.ListenAndServe(":80", nil)
     if err != nil {
         panic(err)
     }
