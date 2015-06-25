@@ -1,41 +1,48 @@
 package main
 
 import (
-    "fmt"
     "gopkg.in/mgo.v2"
     "gopkg.in/mgo.v2/bson"
-    "log"
-    "time"
+    // "log"
 )
 
 type Person struct {
-    ID        bson.ObjectId `bson:"_id,omitempty"`
-    Name      string        `bson:"name"`
-    Phone     string        `bson:"phone"`
-    Timestamp time.Time
+    Name  string `bson:"name"`
+    Phone string `bson:"phone"`
 }
 
-var (
-    IsDrop = false
-)
-var PeopleC *mgo.Collection
+var peopleC *mgo.Collection
 
-func Insert() {
+func Insert(person *Person) {
+
+    if person.Name == "" || GetResult(person.Name) != "" {
+        return
+    }
     // Insert Datas
-    err := PeopleC.Insert(&Person{Name: "Ale", Phone: "+55 53 1234 4321", Timestamp: time.Now()},
-        &Person{Name: "Cla", Phone: "+66 33 1234 5678", Timestamp: time.Now()})
+    err := peopleC.Insert(person)
     if err != nil {
-        log.Println(err)
+        panic(err)
     }
 }
 
-func GetResult() string {
-    result := &Person{}
-
-    err := PeopleC.Find(bson.M{"name": "Ale"}).Select(bson.M{"phone": 0}).One(&result)
+func List() []*Person {
+    query := peopleC.Find(nil).Select(bson.M{"_id": 0}).Sort("_id")
+    list := []*Person{}
+    err := query.All(&list)
     if err != nil {
         panic(err)
     }
 
-    return fmt.Sprintf("%s", result.Name)
+    return list
+}
+
+func GetResult(name string) string {
+    result := &Person{}
+
+    err := peopleC.Find(bson.M{"name": name}).Select(bson.M{"_id": 0}).One(&result)
+    if err != nil && err != mgo.ErrNotFound {
+        panic(err)
+    }
+
+    return result.Name
 }

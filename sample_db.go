@@ -2,7 +2,6 @@ package main
 
 import (
     "gopkg.in/mgo.v2"
-    // "gopkg.in/mgo.v2/bson"
     "log"
     "os"
 )
@@ -13,6 +12,8 @@ func MustConnectMongo() {
     if err := ConnectMongo(); err != nil {
         panic(err)
     }
+    Insert(&Person{Name: "Ale", Phone: "+55 53 1234 4321"})
+    Insert(&Person{Name: "Cla", Phone: "+66 33 1234 5678"})
 }
 
 func ConnectMongo() error {
@@ -53,16 +54,14 @@ func ConnectMongo() error {
     }
 
     DB = session.DB(db)
-    PeopleC = DB.C("people")
+    peopleC = DB.C("people")
 
     return nil
 }
 
 func Drop() { // Drop Database
-    if IsDrop {
-        err := DB.DropDatabase()
-        if err != nil {
-            log.Println(err)
-        }
+    err := DB.DropDatabase()
+    if err != nil {
+        log.Println(err)
     }
 }

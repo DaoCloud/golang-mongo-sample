@@ -11,7 +11,7 @@ var _ = Describe("Sample", func() {
             It("should result 'Ale'", func() {
                 MustConnectMongo()
                 Insert()
-                Expect(GetResult()).To(Equal("Ale"))
+                Expect(GetResult("Ale")).To(Equal("Ale"))
             })
         })
     })

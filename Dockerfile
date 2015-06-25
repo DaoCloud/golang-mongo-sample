@@ -1,5 +1,5 @@
 FROM google/golang
-MAINTAINER Golfen Guo "golfen.guo@daocloud.io"
+MAINTAINER Sakeven "sakeven.jiang@daocloud.io"
 
 # Build app
 WORKDIR /gopath/app
