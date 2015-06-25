@@ -39,8 +39,8 @@ func ConnectMongo() error {
     } else {
         conn += ":27017"
     }
-    // defaultly using "golang-mongo-sample" as the db instance
-    db := "golang-mongo-sample"
+    // defaultly using "test" as the db instance
+    db := "test"
 
     if len(os.Getenv("MONGODB_INSTANCE_NAME")) > 0 {
         db = os.Getenv("MONGODB_INSTANCE_NAME")
