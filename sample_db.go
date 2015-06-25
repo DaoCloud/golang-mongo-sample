@@ -12,6 +12,15 @@ func MustConnectMongo() {
     if err := ConnectMongo(); err != nil {
         panic(err)
     }
+    InitDB()
+}
+
+func InitDB() {
+    defer func() {
+        if e := recover(); e != nil {
+            log.Println(e)
+        }
+    }()
     Insert(&Person{Name: "Ale", Phone: "+55 53 1234 4321"})
     Insert(&Person{Name: "Cla", Phone: "+66 33 1234 5678"})
 }

@@ -26,7 +26,7 @@ func main() {
 func index(res http.ResponseWriter, req *http.Request) {
     defer func() {
         if e := recover(); e != nil {
-            log.Println(res, e)
+            log.Println(e)
             res.WriteHeader(http.StatusInternalServerError)
         }
     }()
@@ -48,7 +48,7 @@ func index(res http.ResponseWriter, req *http.Request) {
 func insert(res http.ResponseWriter, req *http.Request) {
     defer func() {
         if e := recover(); e != nil {
-            log.Println(res, e)
+            log.Println(e)
             res.WriteHeader(http.StatusInternalServerError)
         }
     }()
