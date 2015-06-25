@@ -54,8 +54,8 @@ func insert(res http.ResponseWriter, req *http.Request) {
     }()
 
     person := &Person{}
-    person.Name = req.FormValue("name")
-    person.Phone = req.FormValue("phone")
+    person.Name = strings.Trim(req.FormValue("name"), " ")
+    person.Phone = strings.Trim(req.FormValue("phone"), " ")
 
     Insert(person)
 
