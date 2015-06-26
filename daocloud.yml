@@ -8,15 +8,18 @@ services:
 #  - MONGODB_PORT_27017_TCP_ADDR=mongodb
 #  - MONGODB_PORT_27017_TCP_PORT=27017
 
-script:
-  - export GOPATH=$PWD
-  - export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+install:
   - sudo apt-get update
   - sudo apt-get -y install bzr
-  - go get github.com/t-yuki/gocover-cobertura
-  - go get github.com/onsi/gomega
-  - go get github.com/onsi/ginkgo
-  - go get labix.org/v2/mgo
-  - go install github.com/DaoCloud/golang-mongo-sample
-  - go test github.com/DaoCloud/golang-mongo-sample
 
+before_script:
+  - mkdir -p /gopath/src/golang-mongo-sample
+  - mv ./* /gopath/src/golang-mongo-sample
+
+script:
+  - export GOPATH=/gopath
+  - export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+  - cd $GOPATH/src/golang-mongo-sample
+  - go get -t
+  - go install golang-mongo-sample
+  - go test golang-mongo-sample
