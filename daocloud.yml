@@ -1,4 +1,4 @@
-image: daocloud/ci-golang:1.1
+image: daocloud/ci-golang:1.2
 
 services:
   - mongodb
