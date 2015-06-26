@@ -9,8 +9,13 @@ import (
     "strings"
 )
 
-func main() {
+func init() {
+    Config()
     MustConnectMongo()
+    InitDB()
+}
+
+func main() {
     http.HandleFunc("/", index)
     http.HandleFunc("/new", insert)
     http.HandleFunc("/drop", drop)

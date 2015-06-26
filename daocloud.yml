@@ -1,7 +1,11 @@
-image: daocloud/ci-golang:1.3
+image: daocloud/ci-golang:1.4
 
 services:
   - mongodb
+
+env:
+  - MONGODB_INSTANCE_NAME = "test"
+
 
 install:
   - sudo apt-get update

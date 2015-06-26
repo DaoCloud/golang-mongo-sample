@@ -1,9 +1,11 @@
 package main
 
 import (
-    "gopkg.in/mgo.v2"
+    "fmt"
     "log"
     "os"
+
+    "gopkg.in/mgo.v2"
 )
 
 var DB *mgo.Database
@@ -12,7 +14,6 @@ func MustConnectMongo() {
     if err := ConnectMongo(); err != nil {
         panic(err)
     }
-    InitDB()
 }
 
 func InitDB() {
@@ -25,44 +26,52 @@ func InitDB() {
     Insert(&Person{Name: "Cla", Phone: "+66 33 1234 5678"})
 }
 
+var (
+    username string
+    password string
+    host     string
+    port     string
+    instance string
+)
+
+func Config() {
+
+    username = os.Getenv("MONGODB_USERNAME")
+    password = os.Getenv("MONGODB_PASSWORD")
+    host = os.Getenv("MONGODB_PORT_27017_TCP_ADDR")
+
+    if len(host) == 0 {
+        host = "localhost"
+    }
+
+    port = os.Getenv("MONGODB_PORT_27017_TCP_PORT")
+    if len(port) == 0 {
+        port = "27017"
+    }
+
+    instance = os.Getenv("MONGODB_INSTANCE_NAME")
+}
+
 func ConnectMongo() error {
     conn := ""
-    if len(os.Getenv("MONGODB_USERNAME")) > 0 {
-        conn += os.Getenv("MONGODB_USERNAME")
+    if len(username) > 0 {
+        conn += username
 
-        if len(os.Getenv("MONGODB_PASSWORD")) > 0 {
-            conn += ":" + os.Getenv("MONGODB_PASSWORD")
+        if len(password) > 0 {
+            conn += ":" + password
         }
 
         conn += "@"
     }
 
-    if len(os.Getenv("MONGODB_PORT_27017_TCP_ADDR")) > 0 {
-        conn += os.Getenv("MONGODB_PORT_27017_TCP_ADDR")
-    } else {
-        conn += "localhost"
-    }
-
-    if len(os.Getenv("MONGODB_PORT_27017_TCP_PORT")) > 0 {
-        conn += ":" + os.Getenv("MONGODB_PORT_27017_TCP_PORT")
-    } else {
-        conn += ":27017"
-    }
-    // defaultly using "test" as the db instance
-    db := "test"
-
-    if len(os.Getenv("MONGODB_INSTANCE_NAME")) > 0 {
-        db = os.Getenv("MONGODB_INSTANCE_NAME")
-    }
-
-    conn += "/" + db
+    conn += fmt.Sprintf("%s:%s/%s", host, port, instance)
 
     session, err := mgo.Dial(conn)
     if err != nil {
         return err
     }
 
-    DB = session.DB(db)
+    DB = session.DB(instance)
     peopleC = DB.C("people")
 
     return nil
