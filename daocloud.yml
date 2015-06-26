@@ -3,11 +3,6 @@ image: daocloud/ci-golang:1.4
 services:
   - mongodb
 
-# using default docker-link env
-#env:
-#  - MONGODB_PORT_27017_TCP_ADDR=mongodb
-#  - MONGODB_PORT_27017_TCP_PORT=27017
-
 install:
   - sudo apt-get update
   - sudo apt-get -y install bzr
@@ -18,8 +13,5 @@ before_script:
 
 script:
   - export GOPATH=/gopath
-  - export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
-  - cd $GOPATH/src/golang-mongo-sample
-  - go get -t
-  - go install golang-mongo-sample
+  - go get -t golang-mongo-sample
   - go test golang-mongo-sample
