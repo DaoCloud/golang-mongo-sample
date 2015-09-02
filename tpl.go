@@ -6,7 +6,7 @@ var tpl = []byte(`<!DOCTYPE html>
 	<title>Golang-Mongo-Sample</title>
 </head>
 <body>
-	<h1 align="center">It works!</h1>
+	<h1 align="center">It work</h1>
 	<hr />
 	<table border="1" align="center" width="50%">
 		<caption>Contact List</caption>
