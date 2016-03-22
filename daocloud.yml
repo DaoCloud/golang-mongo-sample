@@ -1,7 +1,7 @@
 version: 2.0
 
 test:
-    image: daocloud/ci-golang:2.4
+    image: daocloud/ci-golang:1.4
 
     services:
         - mongodb
