@@ -1,21 +1,35 @@
-image: daocloud/ci-golang:1.4
+test:
+  image: daocloud/ci-golang:2.4
+  
+  services:
+    - mongodb
+  
+  env:
+    - MONGODB_INSTANCE_NAME = "test"
+  
+  
+  install:
+    - sudo apt-get update
+    - sudo apt-get -y install bzr
+  
+  before_script:
+    - mkdir -p /gopath/src/golang-mongo-sample
+    - mv ./* /gopath/src/golang-mongo-sample
+  
+  script:
+    - export GOPATH=/gopath
+    - go get -t golang-mongo-sample
+    - go test golang-mongo-sample
 
-services:
-  - mongodb
-
-env:
-  - MONGODB_INSTANCE_NAME = "test"
-
-
-install:
-  - sudo apt-get update
-  - sudo apt-get -y install bzr
-
-before_script:
-  - mkdir -p /gopath/src/golang-mongo-sample
-  - mv ./* /gopath/src/golang-mongo-sample
-
-script:
-  - export GOPATH=/gopath
-  - go get -t golang-mongo-sample
-  - go test golang-mongo-sample
+build:
+  lite-image:
+    compile:
+      dockerfile_path: Dockerfile
+      build_dir: /
+      cache: true
+    extract:
+      - /go/bin/app
+    package:
+      dockerfile_path: Dockerfile.package
+      build_dir: /
+      cache: true
